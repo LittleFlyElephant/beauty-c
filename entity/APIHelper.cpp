@@ -5,8 +5,10 @@
 #include "APIHelper.h"
 
 vector<Entity> getEntities(long long id, int type) {
-    return __1::vector<Entity>();
+    return getFromWeb(id, type);
 }
 
-
+vector<Entity> getFromWeb(long long id, int type) {
+    return __1::vector<Entity>();
+}
 

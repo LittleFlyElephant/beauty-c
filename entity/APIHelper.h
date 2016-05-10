@@ -9,5 +9,6 @@
 
 //0-id,1-auid,2-afid,3-rid,4-jid,5-cid,6-fid
 vector<Entity> getEntities(long long id, int type);
+vector<Entity> getFromWeb(long long id, int type);
 
 #endif //BEAUTY_C_APIHELPER_H
