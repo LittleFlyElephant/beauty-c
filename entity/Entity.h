@@ -12,9 +12,9 @@ using namespace std;
 class Entity {
 public:
     long long id;
-    long long cid;
-    long long jid;
     vector<long long> fids;
+    vector<long long> cids;
+    vector<long long> jids;
     vector<long long> auids;
     vector<long long> afids;
     vector<long long> rids;
