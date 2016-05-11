@@ -1,35 +1,61 @@
 #include <iostream>
+#include <cstring>
+
+
 #include "web/mongoose.h"
 using namespace std;
+#define ll long long
+static const char *s_http_port = "8000";
 
-// Define an event handler function
-static void ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
-    struct mbuf *io = &nc->recv_mbuf;
-    cout<<"here"<<endl;
-    switch (ev) {
-        case MG_EV_RECV:
-            // This event handler implements simple TCP echo server
-            mg_send(nc, io->buf, io->len);  // Echo received data back
-            mbuf_remove(io, io->len);      // Discard data from recv buffer
-            break;
-        default:
-            break;
+static void ev_handler(struct mg_connection *c, int ev, void *p) {
+    if (ev == MG_EV_HTTP_REQUEST) {
+        struct http_message *hm = (struct http_message *) p;
+        const  char * query=hm->query_string.p;
+        int  len=hm->query_string.len;
+        char * q=new char(len);
+        memcpy(q,query,len);
+        int loc=0;
+        for (;loc<len;loc++){
+            if (q[loc]=='&')
+                break;
+        }
+        char fir[loc-3]={'\0'};
+        char sec[len-loc-5+1]={'\0'};
+
+        memcpy(fir,&q[4],loc-4);
+        memcpy(sec,&q[loc+5],len-loc-5);
+        ll id1=strtol(fir,NULL,10);
+        ll id2=strtol(sec,NULL,10);
+        char reply[100];
+
+        /* Send the reply */
+        snprintf(reply, sizeof(reply), "{ \"uri\": \"%.*s\" }\n",
+                 (int) hm->uri.len, hm->uri.p);
+        mg_printf(c, "HTTP/1.1 200 OK\r\n"
+                          "Content-Type: application/json\r\n"
+                          "Content-Length: %d\r\n"
+                          "\r\n"
+                          "%s",
+                  (int) strlen(reply), reply);
+
+
     }
 }
 
 int main(void) {
     struct mg_mgr mgr;
+    struct mg_connection *nc;
 
-    mg_mgr_init(&mgr, NULL);  // Initialize event manager object
+    mg_mgr_init(&mgr, NULL);
+    nc = mg_bind(&mgr, s_http_port, ev_handler);
+    mg_set_protocol_http_websocket(nc);
 
-    // Note that many connections can be added to a single event manager
-    // Connections can be created at any point, e.g. in event handler function
-    mg_bind(&mgr, "1234", ev_handler);  // Create listening connection and add it to the event manager
 
-    for (;;) {  // Start infinite event loop
-        mg_mgr_poll(&mgr, 1000);
+    printf("Starting multi-threaded server on port %s\n", s_http_port);
+    for (;;) {
+        mg_mgr_poll(&mgr, 3000);
     }
-
     mg_mgr_free(&mgr);
+
     return 0;
 }
