@@ -12,6 +12,7 @@
 #include "../rapidjson/filewritestream.h"
 #include "../rapidjson/stringbuffer.h"
 #include "Method.cpp"
+#include <stdio.h>
 using  namespace std;
 using namespace rapidjson;
 
@@ -37,11 +38,17 @@ string convert2json(vector<Ans> src){
     //
     for (int i = 0; i < src.size(); ++i) {
         Ans ans=src[i];
-        Value value(kArrayType);
+
+        char temp[ans.len][30];
+        Value tt(kArrayType);
         for (int j = 0; j < ans.len; ++j) {
-            value.PushBack(ans.ans[i],document.GetAllocator());
+
+            sprintf(temp[i],"%ld",ans.ans[i]);
+            Value value(StringRef(temp[i]));
+            tt.PushBack(value,document.GetAllocator());
         }
-        root.PushBack(value,document.GetAllocator());
+
+        root.PushBack(tt,document.GetAllocator());
 
     }
     StringBuffer stringBuffer;
