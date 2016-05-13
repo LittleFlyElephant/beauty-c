@@ -114,6 +114,7 @@ vector<ll> au22id(Entity src,Entity dst){
 
 //0-id,1-auid,2-afid,3-rid,4-jid,5-cid,6-fid
 vector<Entity> getE(ll id,int type){
+    cout<<"use"<<endl;
     return  getFromWeb(id,type);
 }
 
@@ -141,10 +142,16 @@ string convert2json(vector<Ans> src){
 }
 
 vector<Ans> cx(ll id1,ll id2){
-    vector<Ans> ans=*(new vector<Ans>);
+    vector<Ans> ans;
     vector<Entity> start=getE(id1,0);
+    if (start[0].check()){
+        start=getE(id1,1);
+    }
     vector<Entity> end=getE(id2,0);
-
+    if (end[0].check()){
+        end=getE(id2,1);
+    }
+    cout << "in" << endl;
     if (start.size()>1&&end.size()>1){
         //au -> au
         //au->af->au
@@ -276,6 +283,7 @@ vector<Ans> cx(ll id1,ll id2){
                         ans1->ans[1]=firid;
                         ans1->ans[2]=temp[k];
                         ans1->ans[3]=id2;
+                        ans1->len=4;
                         ans.push_back(*ans1);
                     }
                 }
@@ -368,6 +376,7 @@ vector<Ans> cx(ll id1,ll id2){
                         ans1->ans[1]=temp[j].id;
                         ans1->ans[2]=end[k].id;
                         ans1->ans[3]=id2;
+                        ans1->len=4;
                         ans.push_back(*ans1);
                     }
                 }
@@ -387,6 +396,7 @@ vector<Ans> cx(ll id1,ll id2){
                             ans1->ans[1]=firau;
                             ans1->ans[2]=secaf[l];
                             ans1->ans[3]=id2;
+                            ans1->len=4;
                             ans.push_back(*ans1);
                         }
                     }
@@ -431,6 +441,7 @@ vector<Ans> cx(ll id1,ll id2){
                 ans1->ans[0]=id1;
                 ans1->ans[1]=firau[i];
                 ans1->ans[2]=id2;
+                ans1->len=3;
                 ans.push_back(*ans1);
             }
         }
@@ -467,6 +478,7 @@ vector<Ans> cx(ll id1,ll id2){
                     ans1->ans[1]=firau;
                     ans1->ans[2]=sec[j].id;
                     ans1->ans[3]=id2;
+                    ans1->len=4;
                     ans.push_back(*ans1);
                 }
             }
@@ -483,6 +495,7 @@ vector<Ans> cx(ll id1,ll id2){
                         ans1->ans[1]=fir[j].id;
                         ans1->ans[2]=secau[k];
                         ans1->ans[3]=id2;
+                        ans1->len=4;
                         ans.push_back(*ans1);
 
                     }
@@ -507,6 +520,7 @@ vector<Ans> cx(ll id1,ll id2){
                     ans1->ans[1]=fid[i];
                     ans1->ans[2]=firid[j].id;
                     ans1->ans[3]=id2;
+                    ans1->len=4;
                     ans.push_back(*ans1);
                 }
             }
@@ -522,6 +536,7 @@ vector<Ans> cx(ll id1,ll id2){
                     ans1->ans[1]=jid[i];
                     ans1->ans[2]=jirid[j].id;
                     ans1->ans[3]=id2;
+                    ans1->len=4;
                     ans.push_back(*ans1);
                 }
             }
@@ -537,12 +552,24 @@ vector<Ans> cx(ll id1,ll id2){
                     ans1->ans[1]=cid[i];
                     ans1->ans[2]=cirid[j].id;
                     ans1->ans[3]=id2;
+                    ans1->len=4;
                     ans.push_back(*ans1);
                 }
             }
         }
     }
-
+    cout << ans.size() << endl;
+    //
+    map<Ans,int > map1;
+    for(int i=0;i<ans.size();i++){
+        map1[ans[i]]=0;
+    }
+    ans.clear();
+    map<Ans,int >::iterator iterator1=map1.begin();
+    for ( ; iterator1!=map1.end(); iterator1++) {
+        ans.push_back(iterator1->first);
+    }
+    return ans;
 
 }
 
@@ -568,6 +595,7 @@ void id2fcj2id(vector<Entity> id,vector<Ans> ans,Entity tar,ll id1){
                 ans1->ans[1]=now.id;
                 ans1->ans[2]=fid[j];
                 ans1->ans[3]=tar.id;
+                ans1->len=4;
                 ans.push_back(*ans1);
             }
         }
@@ -585,6 +613,7 @@ void id2fcj2id(vector<Entity> id,vector<Ans> ans,Entity tar,ll id1){
                 ans1->ans[1]=now.id;
                 ans1->ans[2]=cid[j];
                 ans1->ans[3]=tar.id;
+                ans1->len=4;
                 ans.push_back(*ans1);
             }
         }
@@ -602,6 +631,7 @@ void id2fcj2id(vector<Entity> id,vector<Ans> ans,Entity tar,ll id1){
                 ans1->ans[1]=now.id;
                 ans1->ans[2]=jid[j];
                 ans1->ans[3]=tar.id;
+                ans1->len=4;
                 ans.push_back(*ans1);
             }
         }

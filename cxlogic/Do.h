@@ -5,8 +5,11 @@
 #ifndef BEAUTY_C_DO_H
 #define BEAUTY_C_DO_H
 
+#include <iostream>
 #include "Method.h"
+#include <map>
 #include <string>
+#include <iterator>
 bool id2id(Entity src,Entity dst);
 vector<ll> af2au(Entity src,Entity dst);
 bool inline id2au(Entity src,Entity dst);

@@ -133,6 +133,7 @@ vector<Entity> getFromWeb(long long id, int type) {
     base += buildString(id, type);
     base += "&attributes=";
     base += attrs;
+    base += "&count=10000";
     base += "&subscription-key=f7cc29509a8443c5b3a5e56b0e38b5a6";
 
     if (curly.Fetch(base) == CURLE_OK){

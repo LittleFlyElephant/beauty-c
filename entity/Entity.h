@@ -20,6 +20,9 @@ public:
     vector<long long> rids;
     vector<long long> afids;
     vector<long long> auids;
+    bool check(){
+        return  fids.empty()&&cids.empty()&&jids.empty()&&rids.empty()&&afids.empty()&&auids.empty();
+    }
 };
 
 

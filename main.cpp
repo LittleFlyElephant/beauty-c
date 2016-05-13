@@ -20,8 +20,10 @@ static void ev_handler(struct mg_connection *c, int ev, void *p) {
             if (q[loc]=='&')
                 break;
         }
-        char fir[loc-3]={'\0'};
-        char sec[len-loc-5+1]={'\0'};
+        char fir[loc-3];
+        fir[loc-4] = '\0';
+        char sec[len-loc-5+1];
+        sec[len-loc-5] = '\0';
 
         memcpy(fir,&q[4],loc-4);
         memcpy(sec,&q[loc+5],len-loc-5);

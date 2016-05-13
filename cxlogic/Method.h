@@ -17,6 +17,24 @@ public:
     Ans(){
         len=0;
     }
+
+    bool  operator<(const Ans& b) const {
+        if (this->len<b.len)
+            return  true;
+        if (this->len>b.len)
+            return false;
+        else
+            return this->ans[1]<b.ans[1];
+    }
+    bool operator==(const Ans& b){
+        if (b.len!=this->len)
+            return false;
+        for (int i = 1; i < this->len-1; ++i) {
+            if (this->ans[i]!=b.ans[i])
+                return  false;
+        }
+        return true;
+    }
 };
 
 
