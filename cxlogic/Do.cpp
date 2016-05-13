@@ -5,9 +5,8 @@
 #ifndef _do_
 #define _do_
 
-#include "Method.h"
+#include "Do.h"
 using  namespace std;
-using namespace rapidjson;
 
 
 bool id2id(Entity src,Entity dst){
@@ -109,8 +108,8 @@ vector<ll> au22id(Entity src,Entity dst){
 }
 
 
-vector<ll> comp(Entity src,Entity dst);
-void id2fcj2id(vector<Entity> ,vector<Ans>,Entity,ll);
+
+
 
 
 //0-id,1-auid,2-afid,3-rid,4-jid,5-cid,6-fid

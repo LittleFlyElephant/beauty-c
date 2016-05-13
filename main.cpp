@@ -3,7 +3,7 @@
 
 
 #include "web/mongoose.h"
-#include "cxlogic/Do.cpp"
+#include "cxlogic/Do.h"
 using namespace std;
 #define ll long long
 static const char *s_http_port = "8000";

@@ -7,11 +7,8 @@
 #define ll long long
 #include "../entity/Entity.h"
 #include "../entity/APIHelper.h"
-#include "../rapidjson/document.h"
-#include "../rapidjson/prettywriter.h"
-#include "../rapidjson/filewritestream.h"
-#include "../rapidjson/stringbuffer.h"
 #include <stdio.h>
+
 #include <set>
 class Ans{
 public:
