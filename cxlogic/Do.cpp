@@ -1,20 +1,14 @@
 //
 // Created by cxworks on 16-5-11.
 //
-#ifndef ll
-#define ll long long
-#endif
 
-#include "../entity/Entity.h"
-#include "../entity/APIHelper.h"
-#include "../rapidjson/document.h"
-#include "../rapidjson/prettywriter.h"
-#include "../rapidjson/filewritestream.h"
-#include "../rapidjson/stringbuffer.h"
-#include "Method.cpp"
-#include <stdio.h>
+#ifndef _do_
+#define _do_
+
+#include "Method.h"
 using  namespace std;
 using namespace rapidjson;
+
 
 bool id2id(Entity src,Entity dst){
     vector<ll> rid=src.rids;
@@ -127,33 +121,24 @@ vector<Entity> getE(ll id,int type){
 
 
 string convert2json(vector<Ans> src){
-    Document document;
-
-    Value root(kArrayType);
-    //
+   string ans;
+    ans.append("[");
     for (int i = 0; i < src.size(); ++i) {
-        Ans ans=src[i];
-
-        char temp[ans.len][30];
-        Value tt(kArrayType);
-        for (int j = 0; j < ans.len; ++j) {
-
-            sprintf(temp[i],"%lld",ans.ans[i]);
-            Value value(StringRef(temp[i]));
-            tt.PushBack(value,document.GetAllocator());
+        int len=src[i].len;
+        ans.append("[");
+        for (int j = 0; j < len; ++j) {
+            char t[20];
+            sprintf(t,"%lld",src[i].ans[j]);
+            ans.append(t);
+            if (j<len-1)
+                ans.append(",");
         }
-
-        root.PushBack(tt,document.GetAllocator());
-
+        ans.append("]");
+        if (i<src.size()-1)
+            ans.append(",");
     }
-    StringBuffer stringBuffer;
-    Writer<StringBuffer> writer(stringBuffer);
-    root.Accept(writer);
-    string reststring = *(new string(stringBuffer.GetString()));
-    char* ans=new char[reststring.length()];
-    return  reststring;
-
-
+    ans.append("]");
+    return  ans;
 }
 
 vector<Ans> cx(ll id1,ll id2){
@@ -623,3 +608,5 @@ void id2fcj2id(vector<Entity> id,vector<Ans> ans,Entity tar,ll id1){
         }
     }
 }
+
+#endif
