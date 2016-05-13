@@ -135,8 +135,6 @@ vector<Entity> getFromWeb(long long id, int type) {
     base += attrs;
     base += "&subscription-key=f7cc29509a8443c5b3a5e56b0e38b5a6";
 
-    cout << base << endl;
-
     if (curly.Fetch(base) == CURLE_OK){
         ans = jsonToEntities(curly.Content());
     } else
