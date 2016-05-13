@@ -12,6 +12,7 @@ void addToNodes(vector<long long> toAdd, int type, vector<Node> nodes){
     for (t = toAdd.begin(); t < toAdd.end(); t++) {
         long long l = *t;
         Node newNode(l, type);
+        newNode.hop1 = getEntities(l, type);
         nodes.insert(nodes.end(), newNode);
     }
 }
@@ -28,6 +29,10 @@ vector<Node> getFirstHop(long long id, int type){
             addToNodes(e.fids, 6, nodes);
             addToNodes(e.cids, 5, nodes);
             addToNodes(e.jids, 4, nodes);
+            vector<Author>::iterator aa_it;
+            for (aa_it = e.aas.begin(); aa_it < e.aas.end(); ++aa_it) {
+
+            }
         }
     }else {//是 auid
         vector<Entity>::iterator t;
@@ -52,6 +57,8 @@ vector<vector<long long>> calculate(long long id1, long long id2){
     int id2_type = getIdType(id2);
     vector<Node> id1_hop1 = getFirstHop(id1, id1_type);
     vector<Node> id2_hop1 = getFirstHop(id2, id2_type);
-    
+
+    vector<vector<long long>> ans;
+
 
 }
