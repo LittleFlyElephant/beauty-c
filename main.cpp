@@ -35,7 +35,7 @@ static void ev_handler(struct mg_connection *c, int ev, void *p) {
                           "Content-Length: %d\r\n"
                           "\r\n"
                           "%s",
-                  (int) ans.length(), ans);
+                  (int) ans.length(), ans.c_str());
 
 
     }
