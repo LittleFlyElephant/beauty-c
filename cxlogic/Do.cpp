@@ -28,7 +28,23 @@ char* convert2json(vector<Ans> src){
     Document document;
 
     Value root(kArrayType);
-    
+    //
+    for (int i = 0; i < src.size(); ++i) {
+        Ans ans=src[i];
+        Value value(kArrayType);
+        for (int j = 0; j < ans.len; ++j) {
+            value.PushBack(ans.ans[i],document.GetAllocator());
+        }
+        root.PushBack(value,document.GetAllocator());
+
+    }
+    StringBuffer stringBuffer;
+    Writer<StringBuffer> writer(stringBuffer);
+    root.Accept(writer);
+    string reststring = stringBuffer.GetString();
+    char* ans=new char[reststring.length()];
+    strcpy(ans,reststring);
+    return  ans;
 
 
 }
