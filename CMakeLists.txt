@@ -7,9 +7,9 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -lcurl")
 set(SOURCE_FILES
     curlHelper/curly.cpp
     curlHelper/curly.h
-#    cxlogic/Do.cpp
-#    cxlogic/Method.cpp
-#    cxlogic/Point.cpp
+    cxlogic/Do.cpp
+    cxlogic/Method.cpp
+    cxlogic/Point.cpp
     entity/APIHelper.cpp
     entity/APIHelper.h
     entity/Author.cpp
@@ -53,7 +53,9 @@ set(SOURCE_FILES
     rapidjson/writer.h
     web/mongoose.c
     web/mongoose.h
-    entity/main.cpp)
+        main.cpp
+#    entity/main.cpp
+        )
 
 add_executable(beauty_c ${SOURCE_FILES})
 

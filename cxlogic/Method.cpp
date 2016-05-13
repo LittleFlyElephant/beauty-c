@@ -11,6 +11,17 @@
 #define ll long long
 using namespace std;
 
+class Ans{
+public:
+    ll ans[4];
+    int len;
+    Ans(){
+        len=0;
+    }
+};
+
+
+
 bool id2id(Entity src,Entity dst){
     vector<ll> rid=src.rids;
     for (int i = 0; i < rid.size(); ++i) {

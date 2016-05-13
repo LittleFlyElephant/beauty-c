@@ -14,9 +14,15 @@
 #include "Method.cpp"
 using  namespace std;
 using namespace rapidjson;
+
+
+
+
+
 vector<ll> comp(Entity src,Entity dst);
 void id2fcj2id(vector<Entity> ,vector<Ans>,Entity,ll);
-class Ans;
+
+
 //0-id,1-auid,2-afid,3-rid,4-jid,5-cid,6-fid
 vector<Entity> getE(ll id,int type){
     return  getFromWeb(id,type);
@@ -24,7 +30,7 @@ vector<Entity> getE(ll id,int type){
 
 
 
-char* convert2json(vector<Ans> src){
+string convert2json(vector<Ans> src){
     Document document;
 
     Value root(kArrayType);
@@ -43,8 +49,7 @@ char* convert2json(vector<Ans> src){
     root.Accept(writer);
     string reststring = stringBuffer.GetString();
     char* ans=new char[reststring.length()];
-    strcpy(ans,reststring);
-    return  ans;
+    return  reststring;
 
 
 }
@@ -457,14 +462,6 @@ vector<Ans> cx(ll id1,ll id2){
 
 
 
-class Ans{
-public:
-    ll ans[4];
-    int len;
-    Ans(){
-        len=0;
-    }
-};
 
 
 void id2fcj2id(vector<Entity> id,vector<Ans> ans,Entity tar,ll id1){

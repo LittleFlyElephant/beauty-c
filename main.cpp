@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstring>
-
+#include "cxlogic/Do.cpp"
 
 #include "web/mongoose.h"
 using namespace std;
@@ -26,17 +26,16 @@ static void ev_handler(struct mg_connection *c, int ev, void *p) {
         memcpy(sec,&q[loc+5],len-loc-5);
         ll id1=strtol(fir,NULL,10);
         ll id2=strtol(sec,NULL,10);
-        char reply[100];
+        //
+        string ans=convert2json(cx(id1,id2));
 
         /* Send the reply */
-        snprintf(reply, sizeof(reply), "{ \"uri\": \"%.*s\" }\n",
-                 (int) hm->uri.len, hm->uri.p);
         mg_printf(c, "HTTP/1.1 200 OK\r\n"
                           "Content-Type: application/json\r\n"
                           "Content-Length: %d\r\n"
                           "\r\n"
                           "%s",
-                  (int) strlen(reply), reply);
+                  (int) ans.length(), ans);
 
 
     }
