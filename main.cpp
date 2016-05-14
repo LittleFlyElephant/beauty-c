@@ -6,8 +6,10 @@
 #include "cxlogic/Do.h"
 using namespace std;
 #define ll long long
-static const char *s_http_port = "8020";
 
+static const char *s_http_port = "8000";
+char fir[20];
+char sec[20];
 static void ev_handler(struct mg_connection *c, int ev, void *p) {
     if (ev == MG_EV_HTTP_REQUEST) {
         struct http_message *hm = (struct http_message *) p;
@@ -20,9 +22,9 @@ static void ev_handler(struct mg_connection *c, int ev, void *p) {
             if (q[loc]=='&')
                 break;
         }
-        char fir[loc-3];
+
         fir[loc-4] = '\0';
-        char sec[len-loc-5+1];
+
         sec[len-loc-5] = '\0';
 
         memcpy(fir,&q[4],loc-4);
