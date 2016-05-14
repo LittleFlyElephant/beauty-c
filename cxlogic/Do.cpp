@@ -10,6 +10,8 @@ using  namespace std;
 
 
 bool id2id(Entity src,Entity dst){
+    if (src.rids.empty())
+        return false;
     vector<ll> rid=src.rids;
     for (int i = 0; i < rid.size(); ++i) {
         if (rid[i]==dst.id)
@@ -39,6 +41,8 @@ bool inline id2au(Entity src,Entity dst){
 
 vector<ll> fid2id(Entity src,Entity dst){
     vector<ll> ans=vector<ll>();
+    if (src.fids.empty()||dst.fids.empty())
+        return ans;
     vector<ll> srcfid=src.fids;
     set<ll> srcfidset;
     for (int i = 0; i < srcfid.size(); ++i) {
@@ -54,6 +58,8 @@ vector<ll> fid2id(Entity src,Entity dst){
 
 vector<ll> jid2id(Entity src,Entity dst){
     vector<ll> ans=vector<ll>();
+    if (src.jids.empty()||dst.jids.empty())
+        return ans;
     vector<ll> srcjid=src.jids;
     set<ll> srcjidset;
     for (int i = 0; i < srcjid.size(); ++i) {
@@ -69,6 +75,8 @@ vector<ll> jid2id(Entity src,Entity dst){
 
 vector<ll> cid2id(Entity src,Entity dst){
     vector<ll> ans=vector<ll>();
+    if (src.cids.empty()||dst.cids.empty())
+        return ans;
     vector<ll> srccid=src.cids;
     set<ll> srccidset;
     for (int i = 0; i < srccid.size(); ++i) {
@@ -113,7 +121,7 @@ vector<ll> au22id(Entity src,Entity dst){
 
 
 //0-id,1-auid,2-afid,3-rid,4-jid,5-cid,6-fid
-vector<Entity> getE(ll id,int type){
+vector<Entity> inline getE(ll id,int type){
     cout<<"use"<<endl;
     return  getFromWeb(id,type);
 }
@@ -206,8 +214,8 @@ vector<Ans> cx(ll id1,ll id2){
         //au->id
         Entity ende=end[0];
         //au->id
-        for (int i = 0; i < start.size(); ++i) {
-            if (au2id(start[i],ende)){
+        for (int i = 0; i < ende.auids.size(); ++i) {
+            if (id1==ende.auids[i]){
                 Ans* ans1=new  Ans();
                 ans1->ans[0]=id1;
                 ans1->ans[1]=id2;
@@ -234,19 +242,22 @@ vector<Ans> cx(ll id1,ll id2){
             vector<ll> firafid=start[i].afids;
             for (int j = 0; j < firafid.size(); ++j) {
                 vector<Entity> secauid=getE(firafid[j],2);
-
+                set<ll> secau;
                 for (int k = 0; k < secauid.size(); ++k) {
-                    vector<ll> secau=au22id(secauid[k],ende);
-                    if (!secau.empty()){
-                        for (int l = 0; l < secau.size(); ++l) {
-                            Ans * ans1=new Ans();
-                            ans1->ans[0]=id1;
-                            ans1->ans[1]=firafid[j];
-                            ans1->ans[2]=secau[l];
-                            ans1->ans[3]=id2;
-                            ans1->len=4;
-                            ans.push_back(*ans1);
-                        }
+                    for (int l = 0; l < secauid[k].auids.size(); ++l) {
+                        secau.insert(secauid[k].auids[l]);
+                    }
+                }
+                //
+                for (int k = 0; k < ende.auids.size(); ++k) {
+                    if (secau.find(ende.auids[k])!=secau.end()){
+                        Ans* ans1=new Ans();
+                        ans1->ans[0]=id1;
+                        ans1->ans[1]=firafid[j];
+                        ans1->ans[2]=ende.auids[k];
+                        ans1->ans[3]=id2;
+                        ans1->len=4;
+                        ans.push_back(*ans1);
                     }
                 }
             }
