@@ -446,8 +446,65 @@ vector<Ans> cx(ll id1,ll id2){
             }
         }
         //id->fcj->id
-        id2fcj2id(start,ans,ende,id1);
+        //fid
+        if(!starte.fids.empty()&&!ende.fids.empty()){
+            vector<ll> dstfid=ende.fids;
+            set<ll> dst;
+            for (int i = 0; i < dstfid.size(); ++i) {
+                dst.insert(dstfid[i]);
+            }
+            vector<ll> srcfid=starte.fids;
+            for (int i = 0; i < srcfid.size(); ++i) {
+                if (dst.find(srcfid[i])!=dst.end()){
+                    Ans* ans1=new Ans();
+                    ans1->ans[0]=id1;
+                    ans1->ans[1]=srcfid[i];
+                    ans1->ans[2]=id2;
+                    ans1->len=3;
+                    ans.push_back(*ans1);
+                }
+            }
+        }
+        //cid
+        if(!starte.cids.empty()&&!ende.cids.empty()){
+            vector<ll> dstcid=ende.cids;
+            set<ll> dst;
+            for (int i = 0; i < dstcid.size(); ++i) {
+                dst.insert(dstcid[i]);
+            }
+            vector<ll> srccid=starte.cids;
+            for (int i = 0; i < srccid.size(); ++i) {
+                if (dst.find(srccid[i])!=dst.end()){
+                    Ans* ans1=new Ans();
+                    ans1->ans[0]=id1;
+                    ans1->ans[1]=srccid[i];
+                    ans1->ans[2]=id2;
+                    ans1->len=3;
+                    ans.push_back(*ans1);
+                }
+            }
+        }
+        //jid
+        if(!starte.jids.empty()&&!ende.jids.empty()){
+            vector<ll> dstjid=ende.jids;
+            set<ll> dst;
+            for (int i = 0; i < dstjid.size(); ++i) {
+                dst.insert(dstjid[i]);
+            }
+            vector<ll> srcjid=starte.jids;
+            for (int i = 0; i < srcjid.size(); ++i) {
+                if (dst.find(srcjid[i])!=dst.end()){
+                    Ans* ans1=new Ans();
+                    ans1->ans[0]=id1;
+                    ans1->ans[1]=srcjid[i];
+                    ans1->ans[2]=id2;
+                    ans1->len=3;
+                    ans.push_back(*ans1);
+                }
+            }
+        }
         //id->id->id->id
+
         for (int i = 0; i < starte.rids.size(); ++i) {
             vector<Entity> firid=getE(starte.rids[i],3);//rid
             for (int j = 0; j < ende.rids.size(); ++j) {
